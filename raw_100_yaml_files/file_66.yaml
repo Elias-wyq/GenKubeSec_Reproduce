@@ -1,0 +1,19 @@
+---
+# Source: redis-ha/templates/redis-ha-rolebinding.yaml
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: chaman-redis-ha
+  labels:
+    heritage: Tiller
+    release: chaman
+    chart: redis-ha-3.7.1
+    app: chaman-redis-ha
+subjects:
+- kind: ServiceAccount
+  name: chaman-redis-ha
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: chaman-redis-ha

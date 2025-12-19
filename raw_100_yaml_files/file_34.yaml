@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubernetes-dashboard-test
+  labels:
+    addon: kubernetes-dashboard.addons.k8s.io
+    app: kubernetes-dashboard-test
+    kubernetes.io/cluster-service: "true"
+    facing: external
+spec:
+  type: LoadBalancer
+  selector:
+    app: kubernetes-dashboard-test
+  ports:
+  - port: 80

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istio-translate-inspect
+  namespace: issueflow
+  labels:
+    app: istio-translate-inspect
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: istio-translate-inspect
+  template:
+    metadata:
+      labels:
+        app: istio-translate-inspect
+    spec:
+      containers:
+      - name: istio-translate-inspect
+        image: shidaqiu/istio-inspect:1.0
+        command: ["python3", "-u", "entry.py"]
+        imagePullPolicy: "Always"
+        env:
+        - name: GITHUB_TOKEN
+          value: "xxx"

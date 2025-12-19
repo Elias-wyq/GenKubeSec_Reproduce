@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: demo-server
+  name: demo-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo-server
+  template:
+    metadata:
+      labels:
+        app: demo-server
+        room: bjzt
+    spec:
+      containers:
+      - image: docker.io/swiftabc/cncamp-lilong-2022-02-28-d43c98c
+        name: demo-server
+        command:
+            - /http-server
+        args: 
+            - --logtostderr=true
+            - --config=file:////config/mod8.ini
+        volumeMounts:
+            - mountPath: /config
+              name: web-conf
+
+        resources:
+            limits:
+                memory: 200Mi
+            requests:
+                memory: 100Mi
+        lifecycle:
+            preStop:
+              exec:
+                command: [ "/bin/sh","-c","kill -TERM 1" ]
+        ports:
+        - containerPort: 1880 
+        readinessProbe:
+            httpGet:
+                path: /healthz
+                port: 1880
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 1
+        livenessProbe:
+            httpGet:
+                path: /healthz
+                port: 1880
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 1
+      nodeSelector:
+          room: bjzt
+      volumes:
+        - name: web-conf
+          configMap:
+            name: web-config

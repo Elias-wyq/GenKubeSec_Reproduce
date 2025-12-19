@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-master-deploy
+  namespace: jenkins
+  labels:
+    app.kubernetes.io/name: jenkins-master
+    app.kubernetes.io/instance: jenkins-master-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: jenkins-master-pod
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: jenkins-master
+        app.kubernetes.io/instance: jenkins-master-pod
+    spec:
+      containers:
+        - name: jenkins-master-pod
+          image: jenkins/jenkins:jdk11
+          ports:
+            - containerPort: 8080
+            - containerPort: 50000
+          resources:
+            requests:
+              memory: "1000Mi"
+              cpu: "300m"
+            limits:
+              memory: "1000Mi"
+              cpu: "300m"
+          env:
+            - name: JENKINS_JAVA_OPTIONS
+              value: "-Dorg.apache.commons.jelly.tags.fmt.timeZone=Asia/Seoul"
+          volumeMounts:
+            - mountPath: /var/jenkins_home
+              name: jenkins-master-pvc
+      volumes:
+        - name: jenkins-master-pvc
+          persistentVolumeClaim:
+            claimName: jenkins-master-pvc

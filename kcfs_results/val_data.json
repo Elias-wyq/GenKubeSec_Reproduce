@@ -1,0 +1,7 @@
+[
+  {
+    "instruction": "You are a Kubernetes security expert. Detect misconfigurations in the following Kubernetes manifest. Return the detected issues as a list of encoded labels in the format 'ResourceName+UMI_ID'.",
+    "input": "kind: StorageClass\napiVersion: storage.k8s.io/v1\nmetadata:\n  name: vault-azure-storage\n  namespace: demo\n  annotations:\n    storageclass.kubernetes.io/is-default-class: \"false\"\nprovisioner: secrets.csi.kubevault.com\nparameters:\n  ref: demo/vault-app\n  engine: Azure\n  role: my-role\n  path: azure\n  \n",
+    "output": "safe"
+  }
+]

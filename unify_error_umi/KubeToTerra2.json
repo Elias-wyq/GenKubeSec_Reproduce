@@ -1,0 +1,22 @@
+{
+  "Alert on pods/deployment-likes with sharing host's process namespace": "Containers Should Not Share Host Process ID Namespace",
+  "Alert on pods/deployment-likes with sharing host's IPC namespace": "Containers Should Not Share Host IPC Namespace",
+  "Alert on pods/deployment-likes with sharing host's network namespace": "Containers Should Not Share the Host Network Namespace",
+  "Alert on containers of allowing privilege escalation that could gain more privileges than its parent process.": "Containers Should Not Run with AllowPrivilegeEscalation",
+  "Indicates when deployments have containers running in privileged mode.": "Minimize the admission of privileged containers",
+  "Indicates when containers are not set to runAsNonRoot.": "Minimize Admission of Root Containers",
+  "Indicates when objects use a secret in an environment variable.": "Prefer using secrets as files over secrets as environment variables",
+  "Indicates when a deployment reads secret from environment variables. CIS Benchmark 5.4.1: \"Prefer using secrets as files over secrets as environment variables. \"": "Prefer using secrets as files over secrets as environment variables",
+  "Alert on deployments with docker.sock mounted in containers.": "Restrict Mounting Docker Socket in a Container",
+  "Indicates when a deployment-like object is running a container with an invalid container image": "No tag or container image with :Latest tag makes difficult to rollback and track",
+  "Indicates when containers fail to specify a liveness probe.": "No liveness probe will ensure there is no recovery in case of unexpected errors",
+  "Indicates when containers fail to specify a readiness probe.": "No readiness probe will affect automatic recovery in case of unexpected errors",
+  "Indicates when containers are running without a read-only root filesystem.": "Container images with readOnlyRootFileSystem set as false mounts the container root file system with write permissions",
+  "Indicates when a resource is deployed to the default namespace. CIS Benchmark 5.7.1: Create administrative boundaries between resources using namespaces. CIS Benchmark 5.7.4: The default namespace should not be used.": "Default Namespace Should Not be Used",
+  "Indicates when containers do not drop NET_RAW capability": "Minimize the admission of containers with the NET_RAW capability",
+  "Alert on deployments with unsafe /proc mount (procMount=Unmasked) that will bypass the default masking behavior of the container runtime": "Unmasking the procMount will allow more information than is necessary to the program running in the containers spawned by k8s",
+  "Alert on deployments with sensitive host system directories mounted in containers": "Allowing hostPaths to mount to Pod arise the probability of getting access to the node's filesystem",
+  "Indicates when containers do not have CPU requests and limits set.": "CPU Limits Not Set in config file.",
+  "Indicates when containers do not have memory requests and limits set.": "Memory Limits Not Set in config file.",
+  "Indicates when pods use the default service account.": "Ensure that default service accounts are not actively used in Kubernetes Role"
+}

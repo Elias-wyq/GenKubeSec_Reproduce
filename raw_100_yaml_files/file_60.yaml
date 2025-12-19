@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: four-global
+data:
+  URL_LALA_HOST: http://lala:8080/omni-bomni
+  URL_MOSTEST: https://ghost/omen/mostests

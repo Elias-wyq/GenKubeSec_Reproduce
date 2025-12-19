@@ -1,0 +1,20 @@
+# permissions for end users to view marks.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mark-viewer-role
+rules:
+- apiGroups:
+  - hello.mark8s.io
+  resources:
+  - marks
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - hello.mark8s.io
+  resources:
+  - marks/status
+  verbs:
+  - get

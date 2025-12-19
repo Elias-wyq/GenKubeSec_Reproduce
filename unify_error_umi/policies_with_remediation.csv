@@ -1,0 +1,166 @@
+ID,Checkov_Policy,Kube_Linter_Policy,Terrascan_Policy,Remediation
+1,Do not admit containers wishing to share the host process ID namespace,Alert on pods/deployment-likes with sharing host's process namespace,Containers Should Not Share Host Process ID Namespace,Ensure the host's process namespace is not shared.
+2,Do not admit containers wishing to share the host IPC namespace,Alert on pods/deployment-likes with sharing host's IPC namespace,Containers Should Not Share Host IPC Namespace,Ensure the host's IPC namespace is not shared.
+3,Do not admit containers wishing to share the host network namespace,Alert on pods/deployment-likes with sharing host's network namespace,Containers Should Not Share the Host Network Namespace,Ensure the host's network namespace is not shared.
+4,Containers should not run with allowPrivilegeEscalation,Alert on containers of allowing privilege escalation that could gain more privileges than its parent process.,Containers Should Not Run with AllowPrivilegeEscalation,"Ensure containers do not allow privilege escalation by setting allowPrivilegeEscalation=false, privileged=false and removing CAP_SYS_ADMIN capability. See https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ for more details."
+5,Do not admit privileged containers,Indicates when deployments have containers running in privileged mode.,Minimize the admission of privileged containers,Do not run your container as privileged unless it is required.
+6,Container should not be privileged,Indicates when deployments have containers running in privileged mode.,Minimize the admission of privileged containers,Do not run your container as privileged unless it is required.
+7,Do not admit root containers,Indicates when containers are not set to runAsNonRoot.,Minimize Admission of Root Containers,Set runAsUser to a non-zero number and runAsNonRoot to true in your pod or container securityContext. Refer to https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ for details.
+8,Minimize the admission of root containers,Indicates when containers are not set to runAsNonRoot.,Minimize Admission of Root Containers,Set runAsUser to a non-zero number and runAsNonRoot to true in your pod or container securityContext. Refer to https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ for details.
+9,Do not admit containers with the NET_RAW capability,Indicates when containers do not drop NET_RAW capability,Minimize the admission of containers with the NET_RAW capability,"NET_RAW makes it so that an application within the container is able to craft raw packets, use raw sockets, and bind to any address. Remove this capability in the containers under containers security contexts."
+10,Minimize the admission of containers with the NET_RAW capability,Indicates when containers do not drop NET_RAW capability,Minimize the admission of containers with the NET_RAW capability,"NET_RAW makes it so that an application within the container is able to craft raw packets, use raw sockets, and bind to any address. Remove this capability in the containers under containers security contexts."
+11,Liveness Probe Should be Configured,Indicates when containers fail to specify a liveness probe.,No liveness probe will ensure there is no recovery in case of unexpected errors,Specify a liveness probe in your container. Refer to https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/ for details.
+12,Readiness Probe Should be Configured,Indicates when containers fail to specify a readiness probe.,No readiness probe will affect automatic recovery in case of unexpected errors,Specify a readiness probe in your container. Refer to https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/ for details.
+13,CPU limits should be set,Indicates when containers do not have CPU requests and limits set.,CPU Limits Not Set in config file.,Set CPU requests for your container based on its requirements. Refer to https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits for details.
+14,CPU requests should be set,Indicates when containers do not have CPU requests and limits set.,CPU Request Not Set in config file.,Set CPU requests for your container based on its requirements. Refer to https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits for details.
+15,Memory limits should be set,Indicates when containers do not have memory requests and limits set.,Memory Limits Not Set in config file.,Set memory limits for your container based on its requirements. Refer to https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits for details.
+16,Memory requests should be set,Indicates when containers do not have memory requests and limits set.,Memory Request Not Set in config file.,Set memory limits for your container based on its requirements. Refer to https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits for details.
+17,Image Tag should be fixed - not latest or blank,Indicates when a deployment-like object is running a container with an invalid container image,No tag or container image with :Latest tag makes difficult to rollback and track,Use a container image with a specific tag other than latest.
+18,The default namespace should not be used,Indicates when a resource is deployed to the default namespace.   CIS Benchmark 5.7.1: Create administrative boundaries between resources using namespaces. CIS Benchmark 5.7.4: The default namespace should not be used.,Default Namespace Should Not be Used,Create namespaces for objects in your deployment.
+19,Use read-only filesystem for containers where possible,Indicates when containers are running without a read-only root filesystem.,Container images with readOnlyRootFileSystem set as false mounts the container root file system with write permissions,Set readOnlyRootFilesystem to true in the container securityContext.
+20,Do not expose the docker daemon socket to containers,Alert on deployments with docker.sock mounted in containers.,Restrict Mounting Docker Socket in a Container,Ensure the Docker socket is not mounted inside any containers by removing the associated  Volume and VolumeMount in deployment yaml specification. If the Docker socket is mounted inside a container it could allow processes running within  the container to execute Docker commands which would effectively allow for full control of the host.
+21,Prefer using secrets as files over secrets as environment variables,"Indicates when a deployment reads secret from environment variables. CIS Benchmark 5.4.1: ""Prefer using secrets as files over secrets as environment variables. """,Prefer using secrets as files over secrets as environment variables,"If possible, rewrite application code to read secrets from mounted secret files, rather than from environment variables. Refer to https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets for details."
+22,Ensure that default service accounts are not actively used,Indicates when pods use the default service account.,Ensure that default service accounts are not actively used in Kubernetes Role,Create a dedicated service account for your pod. Refer to https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ for details.
+23,Ensure the Kubernetes dashboard is not deployed,,Ensure Kubernetes Dashboard Is Not Deployed,
+24,Ensure that Tiller (Helm v2) is not deployed,,Ensure That Tiller (Helm V2) Is Not Deployed,
+25,Ensure that the Tiller Service (Helm v2) is deleted,,Ensure that the Tiller Service (Helm v2) is deleted,
+26,Ensure the Tiller Deployment (Helm V2) is not accessible from within the cluster,,Ensure That Tiller (Helm V2) Is Not Deployed,
+27,Ensure that Service Account Tokens are only mounted where necessary,,Ensure that Service Account Tokens are only mounted where necessary,
+28,Do not use the CAP_SYS_ADMIN linux capability,,Do Not Use CAP_SYS_ADMIN Linux Capability,
+29,Containers should run as a high UID to avoid host conflict,,Containers Should Run as a High UID to Avoid Host Conflict,
+30,Image should use digest,,Image without digest affects the integrity principle of image security,
+31,Ensure that the admission control plugin AlwaysPullImages is set,,AlwaysPullImages plugin is not set,
+32,Apply security context to your pods and containers,,Apply Security Context to Your Pods and Containers,
+33,Apply security context to your containers,,Apply Security Context to Your Pods and Containers,
+34,Ensure that the seccomp profile is set to docker/default or runtime/default,,Default seccomp profile not enabled will make the container to make non-essential system calls,
+35,Ensure default seccomp profile set to docker/default or runtime/default,,Default seccomp profile not enabled will make the container to make non-essential system calls,
+36,Prevent All NGINX Ingress annotation snippets. See CVE-2021-25742,,CVE-2021-25742: Ingress-nginx with custom snippets allows retrieval of ingress-nginx serviceaccount token and secrets across all namespaces.,
+37,Prevent NGINX Ingress annotation snippets which contain LUA code execution. See CVE-2021-25742,,CVE-2021-25742: Ingress-nginx with custom snippets allows retrieval of ingress-nginx serviceaccount token and secrets across all namespaces.,
+38,Prevent NGINX Ingress annotation snippets which contain alias statements See CVE-2021-25742,,CVE-2021-25742: Ingress-nginx with custom snippets allows retrieval of ingress-nginx serviceaccount token and secrets across all namespaces.,
+39,,Alert on deployments with unsafe /proc mount (procMount=Unmasked) that will bypass the default masking behavior of the container runtime,Unmasking the procMount will allow more information than is necessary to the program running in the containers spawned by k8s,Ensure container does not unsafely exposes parts of /proc by setting procMount=Default.  Unmasked ProcMount bypasses the default masking behavior of the container runtime. See https://kubernetes.io/docs/concepts/security/pod-security-standards/ for more details.
+40,,Alert on deployments with sensitive host system directories mounted in containers,Allowing hostPaths to mount to Pod arise the probability of getting access to the node's filesystem,Ensure sensitive host system directories are not mounted in containers by removing those Volumes and VolumeMounts.
+41,Image Pull Policy should be Always,,,
+42,Containers should not share the host process ID namespace,,,
+43,Containers should not share the host IPC namespace,,,
+44,Containers should not share the host network namespace,,,
+45,Do not allow containers with added capability,,,
+46,Minimize the admission of containers with added capability,,,
+47,Do not specify hostPort unless absolutely necessary,,,
+48,Minimize the admission of containers with capabilities assigned,,,
+49,Minimize wildcard use in Roles and ClusterRoles,,,
+50,Ensure that the --anonymous-auth argument is set to false,,,
+51,Ensure that the --basic-auth-file argument is not set,,,
+52,Ensure that the --token-auth-file argument is not set,,,
+53,Ensure that the --kubelet-https argument is set to true,,,
+54,Ensure that the --kubelet-client-certificate and --kubelet-client-key arguments are set as appropriate,,,
+55,Ensure that the --kubelet-certificate-authority argument is set as appropriate,,,
+56,Ensure that the --authorization-mode argument is not set to AlwaysAllow,,,
+57,Ensure that the --authorization-mode argument includes Node,,,
+58,Ensure that the --authorization-mode argument includes RBAC,,,
+59,Ensure that the admission control plugin EventRateLimit is set,,,
+60,Ensure that the admission control plugin AlwaysAdmit is not set,,,
+61,Ensure that the admission control plugin SecurityContextDeny is set if PodSecurityPolicy is not used,,,
+62,Ensure that the admission control plugin ServiceAccount is set,,,
+63,Ensure that the admission control plugin NamespaceLifecycle is set,,,
+64,Ensure that the admission control plugin PodSecurityPolicy is set,,,
+65,Ensure that the admission control plugin NodeRestriction is set,,,
+66,Ensure that the --insecure-bind-address argument is not set,,,
+67,Ensure that the --insecure-port argument is set to 0,,,
+68,Ensure that the --secure-port argument is not set to 0,,,
+69,Ensure that the --profiling argument is set to false,,,
+70,Ensure that the --audit-log-path argument is set,,,
+71,Ensure that the --audit-log-maxage argument is set to 30 or as appropriate,,,
+72,Ensure that the --audit-log-maxbackup argument is set to 10 or as appropriate,,,
+73,Ensure that the --audit-log-maxsize argument is set to 100 or as appropriate,,,
+74,Ensure that the --request-timeout argument is set as appropriate,,,
+75,Ensure that the --service-account-lookup argument is set to true,,,
+76,Ensure that the --service-account-key-file argument is set as appropriate,,,
+77,Ensure that the --etcd-certfile and --etcd-keyfile arguments are set as appropriate,,,
+78,Ensure that the --tls-cert-file and --tls-private-key-file arguments are set as appropriate,,,
+79,Ensure that the --etcd-cafile argument is set as appropriate,,,
+80,Ensure that encryption providers are appropriately configured,,,
+81,Ensure that the API Server only makes use of Strong Cryptographic Ciphers,,,
+82,Ensure that the --terminated-pod-gc-threshold argument is set as appropriate,,,
+83,Ensure that the --use-service-account-credentials argument is set to true,,,
+84,Ensure that the --service-account-private-key-file argument is set as appropriate,,,
+85,Ensure that the --root-ca-file argument is set as appropriate,,,
+86,Ensure that the RotateKubeletServerCertificate argument is set to true,,,
+87,Ensure that the --bind-address argument is set to 127.0.0.1,,,
+88,Ensure that the --cert-file and --key-file arguments are set as appropriate,,,
+89,Ensure that the --client-cert-auth argument is set to true,,,
+90,Ensure that the --auto-tls argument is not set to true,,,
+91,Ensure that the --peer-cert-file and --peer-key-file arguments are set as appropriate,,,
+92,Ensure that the --peer-client-cert-auth argument is set to true,,,
+93,Ensure that the --client-ca-file argument is set as appropriate,,,
+94,Ensure that the --read-only-port argument is set to 0,,,
+95,Ensure that the --streaming-connection-idle-timeout argument is not set to 0,,,
+96,Ensure that the --protect-kernel-defaults argument is set to true,,,
+97,Ensure that the --make-iptables-util-chains argument is set to true,,,
+98,Ensure that the --hostname-override argument is not set,,,
+99,Ensure that the --event-qps argument is set to 0 or a level which ensures appropriate event capture,,,
+100,Ensure that the --rotate-certificates argument is not set to false,,,
+101,Ensure that the Kubelet only makes use of Strong Cryptographic Ciphers,,,
+102,Minimize ClusterRoles that grant control over validating or mutating admission webhook configurations,,,
+103,Minimize ClusterRoles that grant permissions to approve CertificateSigningRequests,,,
+104,Minimize Roles and ClusterRoles that grant permissions to bind RoleBindings or ClusterRoleBindings,,,
+105,Minimize Roles and ClusterRoles that grant permissions to escalate Roles or ClusterRoles,,,
+106,Limit the use of git-sync to prevent code injection,,,
+107,RoleBinding should not allow privilege escalation to a ServiceAccount or Node on other RoleBinding,,,
+108,Granting create permissions to nodes/proxy or pods/exec sub resources allows potential privilege escalation,,,
+109,No ServiceAccount/Node should have impersonate permissions for groups/users/service-accounts,,,
+110,ServiceAccounts and nodes that can modify services/status may set the status.loadBalancer.ingress.ip field to exploit the unfixed CVE-2020-8554 and launch MiTM attacks against the cluster.,,,
+111,No ServiceAccount/Node should be able to read all secrets,,,
+112,Minimize the admission of pods which lack an associated NetworkPolicy,,,
+113,,"Indicates when a subject (Group/User/ServiceAccount) has create access to Pods. CIS Benchmark 5.1.4: The ability to create pods in a cluster opens up possibilities for privilege escalation and should be restricted, where possible.",,"Where possible, remove create access to pod objects in the cluster."
+114,,Indicates when a subject (Group/User/ServiceAccount) has access to Secrets. CIS Benchmark 5.1.2: Access to secrets should be restricted to the smallest possible group of users to reduce the risk of privilege escalation.,,"Where possible, remove get, list and watch access to secret objects in the cluster."
+115,,CIS Benchmark 5.1.1 Ensure that the cluster-admin role is only used where required,,Create and assign a separate role that has access to specific resources/actions needed for the service account.
+116,,Indicates when HorizontalPodAutoscalers target a missing resource.,,Confirm that your HorizontalPodAutoscaler's scaleTargetRef correctly matches one of your deployments.
+117,,Indicates when ingress do not have any associated services.,,Confirm that your ingress's backend correctly matches the name and port on one of your services.
+118,,Indicates when networkpolicies do not have any associated deployments.,,Confirm that your networkPolicy's podselector correctly matches the labels on one of your deployments.
+119,,Indicates when NetworkPolicyPeer in Egress/Ingress rules -in the Spec of NetworkPolicy- do not have any associated deployments. Applied on peer specified with podSelectors only.,,Confirm that your NetworkPolicy's Ingress/Egress peer's podselector correctly matches the labels on one of your deployments.
+120,,Indicates when services do not have any associated deployments.,,Confirm that your service's selector correctly matches the labels on one of your deployments.
+121,,Indicates when a service monitor's selectors don't match any service. ServiceMonitors are a custom resource only used by the Prometheus operator (https://prometheus-operator.dev/docs/operator/design/#servicemonitor).,,Check selectors and your services.
+122,,Indicates when deployments use the deprecated serviceAccount field.,,"Use the serviceAccountName field instead. If you must specify serviceAccount, ensure values for serviceAccount and serviceAccountName match."
+123,,Alert on deployments that have no specified dnsConfig options,,Specify dnsconfig options in your Pod specification to ensure the expected DNS setting on the Pod. Refer to https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config for details.
+124,,Check that duplicate named env vars aren't passed to a deployment like.,,Confirm that your DeploymentLike doesn't have duplicate env vars names.
+125,,Indicates when objects use a secret in an environment variable.,,"Do not use raw secrets in environment variables. Instead, either mount the secret as a file or use a secretKeyRef. Refer to https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets for details."
+126,,Alert on services for forbidden types,,Ensure containers are not exposed through a forbidden service type such as NodePort or LoadBalancer.
+127,,Indicates when a HorizontalPodAutoscaler specifies less than three minReplicas,,Increase the number of replicas in the HorizontalPodAutoscaler to at least three to increase fault tolerance.
+128,,Indicates when deployments or services are using port names that are violating specifications.,,"Ensure that port naming is in conjunction with the specification. For more information, please look at the Kubernetes Service specification on this page: https://kubernetes.io/docs/reference/_print/#ServiceSpec. And additional information about IANA Service naming can be found on the following page: https://www.rfc-editor.org/rfc/rfc6335.html#section-5.1."
+129,,Indicates when standalone jobs do not set ttlSecondsAfterFinished and when jobs managed by cronjob do set ttlSecondsAfterFinished.,,Set Job.spec.ttlSecondsAfterFinished. Unset CronJob.Spec.JobTemplate.Spec.ttlSecondsAfterFinished.
+130,,Indicates when containers have a liveness probe to a not exposed port.,,Check which ports you've exposed and ensure they match what you have specified in the liveness probe.
+131,,Indicates when a deployment uses less than three replicas,,Increase the number of replicas in the deployment to at least three to increase the fault tolerance of the deployment.
+132,,Indicates when deployment selectors fail to match the pod template labels.,,Confirm that your deployment selector correctly matches the labels in its pod template.
+133,,"Indicates when deployments with multiple replicas fail to specify inter-pod anti-affinity, to ensure that the orchestrator attempts to schedule replicas on different nodes.",,"Specify anti-affinity in your pod specification to ensure that the orchestrator attempts to schedule replicas on different nodes. Using podAntiAffinity, specify a labelSelector that matches pods for the deployment, and set the topologyKey to kubernetes.io/hostname. Refer to https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity for details."
+134,,Indicates when objects use deprecated API versions under extensions/v1beta.,,Migrate using the apps/v1 API versions for the objects. Refer to https://kubernetes.io/blog/2019/07/18/api-deprecations-in-1-16/ for details.
+135,,Alert on deployments that have no node affinity defined,,Specify node-affinity in your pod specification to ensure that the orchestrator attempts to schedule replicas on specified nodes. Refer to https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity for details.
+136,,Indicates when a deployment doesn't use a rolling update strategy,,Use a rolling update strategy to avoid service disruption during an update. A rolling update strategy allows for pods to be systematicaly replaced in a controlled fashion to ensure no service disruption.
+137,,Indicates when pods reference a service account that is not found.,,"Create the missing service account, or refer to an existing service account."
+138,,Indicates when a PodDisruptionBudget has a maxUnavailable value that will always prevent disruptions of pods created by related deployment-like objects.,,Change the PodDisruptionBudget to have maxUnavailable set to a value greater than 0. Refer to https://kubernetes.io/docs/tasks/run-application/configure-pdb/ for more information.
+139,,Indicates when a PodDisruptionBudget sets a minAvailable value that will always prevent disruptions of pods created by related deployment-like objects.,,Change the PodDisruptionBudget to have minAvailable set to a number lower than the number of replicas in the related deployment-like objects. Refer to https://kubernetes.io/docs/tasks/run-application/configure-pdb/ for more information.
+140,,Indicates when a PodDisruptionBudget does not explicitly set the unhealthyPodEvictionPolicy field.,,Set unhealthyPodEvictionPolicy to AlwaysAllow. Refer to https://kubernetes.io/docs/tasks/run-application/configure-pdb/#unhealthy-pod-eviction-policy for more information.
+141,,Indicates when a deployment-like object does not use a valid priority class name,,Set up the priority class name for your object to any accepted values.
+142,,Alert on deployments with privileged ports mapped in containers,,"Ensure privileged ports [0, 1024] are not mapped within containers."
+143,,"Indicates when a deployment reads secret from environment variables. CIS Benchmark 5.4.1: ""Prefer using secrets as files over secrets as environment variables. """,,"If possible, rewrite application code to read secrets from mounted secret files, rather than from environment variables. Refer to https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets for details."
+144,,Indicates when containers have a readiness probe to a not exposed port.,,Check which ports you've exposed and ensure they match what you have specified in the readiness probe.
+145,,Indicates when objects do not have an email annotation with a valid email address.,,Add an email annotation to your object with the email address of the object's owner.
+146,,Indicates when objects do not have an email annotation with an owner label.,,Add an email annotation to your object with the name of the object's owner.
+147,,Indicates when a deployment-like object does not use a restart policy,,Set up the restart policy for your object to 'Always' or 'OnFailure' to increase the fault tolerance.
+148,,Indicates when allowPrivilegedContainer SecurityContextConstraints set to true,,"SecurityContextConstraints has AllowPrivilegedContainer set to ""true"". Using this option is dangerous, please consider using allowedCapabilities instead. Refer to https://docs.openshift.com/container-platform/4.12/authentication/managing-security-context-constraints.html#scc-settings_configuring-internal-oauth for details."
+149,,Validate Kubernetes resources against their schemas using kubeconform,,Fix the resource to conform to the Kubernetes API schema.
+150,,Check that YAML keys are sorted in alphabetical order wherever possible.,,Ensure that keys in your YAML manifest are sorted in alphabetical order to improve consistency and readability.
+151,,"Indicates when deployments expose port 22, which is commonly reserved for SSH access.",,Ensure that non-SSH services are not using port 22. Confirm that any actual SSH servers have been vetted.
+152,,Indicates when containers have a startup probe to a not exposed port.,,Check which ports you've exposed and ensure they match what you have specified in the startup probe.
+153,,Alert on deployments specifying unsafe sysctls that may lead to severe problems like wrong behavior of containers,,Ensure container does not allow unsafe allocation of system resources by removing unsafe sysctls configurations. For more details see https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/ https://docs.docker.com/engine/reference/commandline/run/#configure-namespaced-kernel-parameters-sysctls-at-runtime.
+154,,Indicates when containers mount a host path as writable.,,"Set containers to mount host paths as readOnly, if you need to access files on the host."
+155,,,Ensure endpoint slice is not created or updated with loopback addresses as this acts as an attack vector for exploiting CVE-2021-25737 by an authorized user,
+156,,,TLS disabled can affect the confidentiality of the data in transit,
+157,,,No owner for namespace affects the operations,
+158,,,"Vulnerable to CVE-2020-8555 (affected version of kube-controller-manager: v1.18.0, v1.17.0 - v1.17.4, v1.16.0 - v1.16.8, and v1.15.11",
+159,,,Allowing the pod to make system level calls provide access to host/node sensitive information,
+160,,,AppArmor profile not set to default or custom profile will make the container vulnerable to kernel level threats,
+161,,,"Some volume types mount the host file system paths to the pod or container, thus increasing the chance of escaping the container to access the host",
+162,,,CVE-2021-25742: Ingress-nginx with custom snippets with a version that does not support mitigation and allows retrieval of ingress-nginx serviceaccount token and secrets across all namespaces.,
+163,,,Nodeport service can expose the worker nodes as they have public interface,
+164,,,"Vulnerable to CVE-2020-8554, restrict the use of externalIPs",
+165,,,Ensure the use of selector is enforced for Kubernetes Ingress or LoadBalancer service,

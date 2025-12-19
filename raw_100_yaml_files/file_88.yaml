@@ -1,0 +1,23 @@
+# Syntax reference https://kubernetes.io/docs/concepts/configuration/overview/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: server
+          ports:
+            - containerPort: 8080
+          image: gcr.io/wise-coyote-827/frontend-server
+          env:
+            - name: BACKEND_SERVICE_ADDR
+              value: 'backend-internal:8080'
